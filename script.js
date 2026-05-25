@@ -34,44 +34,33 @@
 
 // });
 
-document.addEventListener('DOMContentLoaded',() => {
+
+document.addEventListener('DOMContentLoaded',async () => {
     const input = document.querySelector('#input');
     const btn = document.querySelector('#button');
     const imageContainer = document.querySelector('.imageContainer');
     const error = document.querySelector('.error');
-    
-    btn.addEventListener('click', () => {
+
+    let imageList;
+    async function loadImages(){
+           const result = await fetch('http://localhost:8080/api/load',{
+            method: 'GET'
+           })
+           imageList= await result.json();
+           console.log(imageList)
+           display(imageList);
+          // return imageList;
+}
+loadImages();
+
+    btn.addEventListener('click', async () => {
         const inputvalue = input.value.trim();
 
         if (inputvalue !== '') {
             error.classList.add('hidden');
-            upload()
-            // Create container
-            const imageStoreContainer = document.createElement('div');
-            imageStoreContainer.classList.add('imageStoreContainer');
-
-            const imageList = document.createElement('div');
-            imageList.classList.add('imageList');
-
-            // Create image element
-            const img = document.createElement('img');
-            img.src = inputvalue;
-            img.style.maxWidth = '200px';
-
-            // Create name element
-            const name = document.createElement('p');
-            name.textContent = inputvalue.split('/').pop(); // extract name from URL
-
-            // Append elements
-            imageList.appendChild(img);
-            imageList.appendChild(name);
-
-            // Add to main container
-            imageContainer.appendChild(imageList);
-
-            // Clear input
-            input.value = '';
-
+           await upload();
+           const imageList = await loadImages();
+            
         } else {
             error.classList.remove('hidden');
             console.log('Something went wrong');
@@ -87,7 +76,7 @@ document.addEventListener('DOMContentLoaded',() => {
                     method: 'POST',
                     body: formData
                 });
-
+                return;
                 // const result = await reponse.json();
                 // console.log('Success :',result);
             }catch(error)
@@ -97,4 +86,38 @@ document.addEventListener('DOMContentLoaded',() => {
 
         }
     });
+            function displayImages(str,imgname){
+            const imageStoreContainer = document.createElement('div');
+            imageStoreContainer.classList.add('imageStoreContainer');
+
+            const imageList = document.createElement('div');
+            imageList.classList.add('imageList');
+
+            // Create image element
+            const img = document.createElement('img');
+            img.src = str;
+            img.style.maxWidth = '200px';
+
+            // Create name element
+            const name = document.createElement('p');
+            name.textContent = imgname // extract name from URL
+
+            // Append elements
+            imageList.appendChild(img);
+            imageList.appendChild(name);
+
+            // Add to main container
+            imageContainer.innerHTML += imageList.outerHTML;
+
+            // Clear input
+            input.value = '';
+
+        }
+        function display(imageList){
+            imageList?.forEach(image =>{
+                str = `data:${image.type};base64,${image.imageData}`;
+                console.log(str);
+                displayImages(str,image.name)
+            })
+        }
 });
