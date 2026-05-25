@@ -34,7 +34,7 @@
 
 // });
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded',() => {
     const input = document.querySelector('#input');
     const btn = document.querySelector('#button');
     const imageContainer = document.querySelector('.imageContainer');
@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const inputvalue = input.value.trim();
 
         if (inputvalue !== '') {
-            
             error.classList.add('hidden');
+            upload()
             // Create container
             const imageStoreContainer = document.createElement('div');
             imageStoreContainer.classList.add('imageStoreContainer');
@@ -75,6 +75,26 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             error.classList.remove('hidden');
             console.log('Something went wrong');
+        }
+
+        async function upload(){
+            const file = input.files[0];
+            const formData = new FormData();
+            formData.append('image',file);
+            
+            try{
+                const reponse = await fetch('http://localhost:8080/api/upload',{
+                    method: 'POST',
+                    body: formData
+                });
+
+                // const result = await reponse.json();
+                // console.log('Success :',result);
+            }catch(error)
+            {
+                console.log('Error: ',error);
+            }
+
         }
     });
 });
