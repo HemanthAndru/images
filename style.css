@@ -1,0 +1,76 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+body{
+    background-color: #1a1a1a;
+    margin: 20px;
+    padding: 10px;
+}
+.imageStoreContainer{
+    margin: 20px;
+    padding: 10px;
+}
+
+.imageStoreContainer h1{
+    color:#6de336;
+    text-align: center;
+    font-size: 48px;
+    font-weight: bolder;
+    margin-bottom: 20px;
+}
+.inputContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.inputContainer #input{
+   display: flex;
+   align-items: center;
+   justify-self: center;
+   background-color: aliceblue;
+   padding: 10px;
+   color: #e81a1a;
+   margin-right: 2px;
+}
+#button{
+    display: flex;
+    justify-self: center;
+    align-items: center;
+    padding:11px;
+    background-color: #073df0;
+    color: aliceblue;
+    font-size: 16px;
+    cursor: pointer;
+}
+.imageContainer{
+    display: flex;
+    flex-wrap: wrap;
+    gap:5px;
+    position: absolute;
+    margin-top: 10px;
+}
+.imageContainer .imageList{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #d0ef9f;
+    border-radius: 8px;
+}
+.imageContainer .imageList p{
+    text-align: center;
+    font-size: 18px;
+    padding: 10px;
+    color:#5b7ff5;
+}
+.error{
+    color: #fd0505;
+    text-align: center;
+    font-weight: lighter;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+}
+.hidden{
+    display: none;
+}
